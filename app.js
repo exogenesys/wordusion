@@ -1,0 +1,60 @@
+var express = require('express'),
+	partials = require('express-partials'),
+	app = express(),
+	routes = require('./routes'),
+	errorHandlers = require('./middleware/errorhandlers'),
+	log = require('./middleware/log'),
+	cookieParser = require('cookie-parser'),
+	bodyParser = require('body-parser'),
+	//csrf = require('csurf'),
+	session = require('express-session'),
+	morgan = require('morgan'),
+	util = require('./middleware/utilities'),
+	flash = require('connect-flash'),
+	config = require('./config'),
+	io = require('./socket.io'),
+	mongoose = require('mongoose'),
+	passport = require('passport'),
+	cookieSession = require('cookie-session'),
+	LocalStrategy = require('passport-local').Strategy;
+
+app.use(morgan('dev'));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser(config.secret));
+
+
+//new stuff
+var Account = require('./models/account');
+passport.use(Account.createStrategy());
+
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+mongoose.connect('mongodb://heroku_q46gwrlr:79v177tu5jbrdm9c0cep95lopc@ds019058.mlab.com:19058/heroku_q46gwrlr', function(err) {
+  if (err) {
+    console.log('Could not connect to mongodb on localhost. Ensure that you have mongodb running on localhost and mongodb accepts connections on standard ports!');
+  } else {
+		console.log('Mon is go');
+	}
+});
+
+//routes
+app.get('/', routes.index);
+app.post(config.routes.login, passport.authenticate('local'), routes.login);
+app.get(config.routes.logout, routes.logOut);
+app.post(config.routes.register, routes.register);
+
+app.get('/error', function(req, res, next){
+	next(new Error('A contrived error'));
+});
+app.use(errorHandlers.error);
+app.use(errorHandlers.notFound);
+
+var server = app.listen(process.env.PORT)
+// var server = app.listen(2525);
+io.startIo(server);
