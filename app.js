@@ -2,13 +2,11 @@ var express = require('express'),
 	partials = require('express-partials'),
 	app = express(),
 	routes = require('./routes'),
-	log = require('./middleware/log'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
 	//csrf = require('csurf'),
 	session = require('express-session'),
 	morgan = require('morgan'),
-	util = require('./middleware/utilities'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	io = require('./socket.io'),
@@ -52,8 +50,6 @@ app.post(config.routes.register, routes.register);
 app.get('/error', function(req, res, next){
 	next(new Error('A contrived error'));
 });
-app.use(errorHandlers.error);
-app.use(errorHandlers.notFound);
 
 var server = app.listen(process.env.PORT)
 // var server = app.listen(2525);
