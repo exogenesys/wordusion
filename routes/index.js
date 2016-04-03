@@ -14,10 +14,11 @@ function login(req, res){
 	console.log('Login!');
 	var item = {};
 	Account.findOne({ 'username': req.body.username}, function(err, data) {
-	  if (err)
+	  if (err){
 	  	return console.error(err);
 			item.auth = false;
 			res.send(item);
+		}
 	  else {
 	  	item.username = data.username;
 			item.score_won = data.score_won;
