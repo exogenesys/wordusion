@@ -16,6 +16,8 @@ function login(req, res){
 	Account.findOne({ 'username': req.body.username}, function(err, data) {
 	  if (err)
 	  	return console.error(err);
+			item.auth = false;
+			res.send(item);
 	  else {
 	  	item.username = data.username;
 			item.score_won = data.score_won;
@@ -32,11 +34,12 @@ function register(req, res, next){
 	Account.register(new Account({username: req.body.username, score_won: 0, score_lost: 0}), req.body.password, function(err) {
 		if (err) {
 			console.log('error while user register!', err);
+			res.send({'success' : false});
 			return next(err);
+		} else {
+			console.log('user registered!');
+			res.send({'username' : username, 'success' : true});
 		}
-		console.log('user registered!');
-		res.send({'username' : username});
-
 	});
 };
 

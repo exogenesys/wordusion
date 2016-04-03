@@ -7,6 +7,7 @@ var	cookie = require('cookie'),
 	expressSession = require('express-session'),
 	unirest = require('unirest');
 
+var Chat = require('../models/chat');
 
 var numUsers = 0,
 users = {},
@@ -143,6 +144,14 @@ var socketConnection = function socketConnection(socket){
 	// when the client emits 'new message', this listens and executes
 	socket.on('new message', function (data) {
 		// we tell the client to execute 'new message'
+
+		var chat =  new Chat();
+		chat.message = data.message;
+		chat.sender = data.username;
+		chat.id = data.you + data.opponent;
+		console.log(chat.id);
+		chat.save();
+
 		console.log(data);
 		var n = data.message.indexOf(data.word);
 
