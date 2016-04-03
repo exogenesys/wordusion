@@ -18,7 +18,7 @@ function login(req, res){
 function register(req, res, next){
 	console.log('Registeration!');
 	var username = req.body.username;
-	Account.register(new Account({username: req.body.username}), req.body.password, function(err) {
+	Account.register(new Account({username: req.body.username,created_at: new Date(), score_won: 0, score_lost: 0}), req.body.password, function(err) {
 		if (err) {
 			console.log('error while user register!', err);
 			return next(err);
@@ -38,7 +38,7 @@ function logOut(req, res){
 function user(req, res){
 	var username = req.params.username;
 	console.log(username);
-	Account.findOne({ 'username': username }, function(err, score) {
+	Account.findOne({ 'username': username}, function(err, score) {
 	  if (err) 
 	  	return console.error(err);
 	  else {
