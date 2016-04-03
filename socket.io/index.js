@@ -5,7 +5,6 @@ var io = require('socket.io')(server);
 var	cookie = require('cookie'),
 	cookieParser = require('cookie-parser'),
 	expressSession = require('express-session'),
-	log = require('../middleware/log'),
 	unirest = require('unirest');
 
 
