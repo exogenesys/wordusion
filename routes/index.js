@@ -12,12 +12,16 @@ function index(req, res){
 
 function login(req, res){
 	console.log('Login!');
+	var item = {};
 	Account.findOne({ 'username': req.body.username}, function(err, data) {
 	  if (err)
 	  	return console.error(err);
 	  else {
-	  	data.auth = true;
-	  	res.send(data);
+	  	item.username = data.username;
+			item.score_won = data.score_won;
+			item.score_lost = data.score_lost;
+			item.auth = true;
+	  	res.send(item);
 	}
 	});
 };
