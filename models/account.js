@@ -3,8 +3,9 @@ var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
 
 var Account = new Schema({
-  name: String,
-  created_at: Date
+  created_at: Date,
+  score_won: Number,
+  score_lost: Number
 });
 
 

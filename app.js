@@ -6,7 +6,6 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	//csrf = require('csurf'),
 	session = require('express-session'),
-	morgan = require('morgan'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	io = require('./socket.io'),
@@ -15,7 +14,6 @@ var express = require('express'),
 	cookieSession = require('cookie-session'),
 	LocalStrategy = require('passport-local').Strategy;
 
-app.use(morgan('dev'));
 
 app.use(passport.initialize());
 app.use(passport.session());
