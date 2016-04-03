@@ -1,15 +1,10 @@
-/*
-var util = require('../middleware/utilities'),
-	config = require('../config'),
-	user = require('../passport/user'),
-	passwordUtils = require('../passport/password');
-	*/
-	var Account = require('../models/account');
+var Account = require('../models/account');
 
 module.exports.index = index;
 module.exports.register = register;
 module.exports.login = login;
 module.exports.logOut = logOut;
+module.exports.user = user;
 
 function index(req, res){
 	res.send({'user': req.user});
@@ -38,4 +33,13 @@ function logOut(req, res){
 	console.log('logout');
 	req.logout();
 	res.send({'logout' : true});
+};
+
+function user(req, res){
+	var username = req.params.username;
+	console.log(username);
+	Movie.findOne({ 'username': username }, function(err, score) {
+	  if (err) return console.error(err);
+	  console.log(score);
+	});
 };
