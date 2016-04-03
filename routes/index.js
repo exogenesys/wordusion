@@ -57,6 +57,6 @@ function score(req, res){
 			user.save(function(err){
 				if(err)
 					console.log(err);
-			})
+			});
 	});
 };
