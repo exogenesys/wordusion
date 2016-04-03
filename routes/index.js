@@ -36,7 +36,7 @@ function logOut(req, res){
 };
 
 function user(req, res){
-	var username = req.params.username;
+	var username = req.param.username;
 	console.log(username);
 	Account.findOne({ 'username': username }, function(err, score) {
 	  if (err) 
