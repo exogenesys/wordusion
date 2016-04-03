@@ -4,7 +4,7 @@ var passportLocalMongoose = require('passport-local-mongoose');
 
 var Account = new Schema({
   created_at: Date,
-  score_won: Number,
+  score_won: String,
   score_lost: Number
 });
 
