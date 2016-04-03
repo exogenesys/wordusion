@@ -38,8 +38,11 @@ function logOut(req, res){
 function user(req, res){
 	var username = req.params.username;
 	console.log(username);
-	Movie.findOne({ 'username': username }, function(err, score) {
-	  if (err) return console.error(err);
-	  console.log(score);
+	Account.findOne({ 'username': username }, function(err, score) {
+	  if (err) 
+	  	return console.error(err);
+	  else {
+	  	res.send(score);
+	  	console.log(score);}
 	});
 };
