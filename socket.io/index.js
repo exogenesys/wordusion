@@ -168,7 +168,7 @@ var socketConnection = function socketConnection(socket){
 			});
 		} else {
 			console.log(m[1]);
-			if(data.opponentWord == m[1]){
+			if(data.opponentWord.toUpperCase() == m[1].toUpperCase()){
 				users[data.you].emit('word guessed', {
 					'wordGuessed' : true,
 					'who' : data.you
