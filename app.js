@@ -45,6 +45,7 @@ mongoose.connect('mongodb://heroku_q46gwrlr:79v177tu5jbrdm9c0cep95lopc@ds019058.
 
 //routes
 app.get('/', routes.index);
+app.get('/user', routes.user);
 app.post(config.routes.login, passport.authenticate('local'), routes.login);
 app.get(config.routes.logout, routes.logOut);
 app.post(config.routes.register, routes.register);
