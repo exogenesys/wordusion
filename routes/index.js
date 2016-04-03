@@ -4,7 +4,7 @@ module.exports.index = index;
 module.exports.register = register;
 module.exports.login = login;
 module.exports.logOut = logOut;
-module.exports.user = user;
+module.exports.score = score;
 
 function index(req, res){
 	res.send({'user': req.user});
@@ -13,7 +13,7 @@ function index(req, res){
 function login(req, res){
 	console.log('Login!');
 	Account.findOne({ 'username': req.body.username}, function(err, data) {
-	  if (err) 
+	  if (err)
 	  	return console.error(err);
 	  else {
 	  	data.auth = true;
@@ -42,14 +42,21 @@ function logOut(req, res){
 	res.send({'logout' : true});
 };
 
-function user(req, res){
+function score(req, res){
 	var username = req.params.username;
-	console.log(username);
-	Account.findOne({ 'username': username}, function(err, data) {
-	  if (err) 
+	var result = req.params.result;
+	Account.findOne({ 'username': username}, function(err, user) {
+	  if (err)
 	  	return console.error(err);
 	  else {
-	  	res.send(data);
-	  	console.log(data);}
+			if(result)
+				user.score_won++;
+			else
+				user.score_lost++;
+	  	}
+			user.save(function(err){
+				if(err)
+					console.log(err);
+			})
 	});
 };
