@@ -16,7 +16,7 @@ flag = false;
 var socketConnection = function socketConnection(socket){
 	console.log('Hi');
 	var addedUser = false;
-	when the client emits 'add user', this listens and executes
+	// when the client emits 'add user', this listens and executes
 	socket.on('add user', function (user) {
 		ide = socket.id;
 		console.log('User Added.');
