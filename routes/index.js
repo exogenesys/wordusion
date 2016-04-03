@@ -12,7 +12,14 @@ function index(req, res){
 
 function login(req, res){
 	console.log('Login!');
-	res.send({username : req.body.username, auth : true});
+	Account.findOne({ 'username': req.body.username}, function(err, data) {
+	  if (err) 
+	  	return console.error(err);
+	  else {
+	  	data.auth = true;
+	  	res.send(data);
+	}
+	});
 };
 
 function register(req, res, next){
