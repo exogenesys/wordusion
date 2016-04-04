@@ -154,11 +154,11 @@ var socketConnection = function socketConnection(socket){
 		chat.save();
 
 		console.log(data);
-		var n = data.message.indexOf(data.word);
 		var m = data.message.match(/\*([^*]*)\*/);
+		var n = data.message.indexOf(data.word);
 
 		//Check this
-		if (n == -1 && m =! null)){
+		if (n == -1 && (m =! null)){
 		} else {
 			console.log('wordDeployed : ' + n);
 			users[data.you].emit('word deployed', {
