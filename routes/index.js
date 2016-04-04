@@ -61,6 +61,7 @@ function score(req, res){
 	  if (err || !user)
 	  	return console.error(err);
 	  else {
+			console.log(result + ' ' + typeof(result))
 			if(Boolean(result)){
 				console.log('ey');
 				user.score_won++;
