@@ -22,46 +22,12 @@ var socketConnection = function socketConnection(socket){
 
 	// when the client emits 'add user', this listens and executes
 
-	// socket.on('add user', function (user) {
-	// 	ide = socket.id;
-	// 	console.log('User Added.');
-	// 	console.log(flag);
-	// 	console.log(que);
-	// 	if(flag){
-	//
-	// 		que[1].ide = socket.id;
-	// 		que[1].socket = socket;
-	//
-	// 		que[0].socket.emit('opponent', {'opponent' : que[1].ide, 'you' : que[0].ide});
-	// 		que[1].socket.emit('opponent', {'opponent' : que[0].ide, 'you' : que[1].ide});
-	// 		console.log('Someone said opponent');
-	//
-	//
-	// 		var one = que[0].ide, two = que[1].ide;
-	//
-	// 		users[one] = que[0].socket;
-	// 		users[two] = que[1].socket;
-	//
-	// 		console.log(que);
-	// 		que = {0:{}, 1:{}};
-	// 		flag = false;
-	// 	} else {
-	// 		que[0].ide = socket.id;
-	// 		que[0].socket = socket;
-	// 		console.log(que);
-	// 		flag = true;
-	// 	}
-	// });
-
 	socket.on('add user', function (user) {
 		ide = socket.id;
 		console.log('User Added.');
 		console.log(flag);
 		console.log(que);
-
-			que[0].ide = socket.id;
-			que[0].socket = socket;
-			console.log(que);
+		if(flag){
 
 			que[1].ide = socket.id;
 			que[1].socket = socket;
@@ -79,7 +45,41 @@ var socketConnection = function socketConnection(socket){
 			console.log(que);
 			que = {0:{}, 1:{}};
 			flag = false;
-});
+		} else {
+			que[0].ide = socket.id;
+			que[0].socket = socket;
+			console.log(que);
+			flag = true;
+		}
+	});
+
+// 	socket.on('add user', function (user) {
+// 		ide = socket.id;
+// 		console.log('User Added.');
+// 		console.log(flag);
+// 		console.log(que);
+//
+// 			que[0].ide = socket.id;
+// 			que[0].socket = socket;
+// 			console.log(que);
+//
+// 			que[1].ide = socket.id;
+// 			que[1].socket = socket;
+//
+// 			que[0].socket.emit('opponent', {'opponent' : que[1].ide, 'you' : que[0].ide});
+// 			que[1].socket.emit('opponent', {'opponent' : que[0].ide, 'you' : que[1].ide});
+// 			console.log('Someone said opponent');
+//
+//
+// 			var one = que[0].ide, two = que[1].ide;
+//
+// 			users[one] = que[0].socket;
+// 			users[two] = que[1].socket;
+//
+// 			console.log(que);
+// 			que = {0:{}, 1:{}};
+// 			flag = false;
+// });
 
 	socket.on('game start', function (data) {
 		console.log('Someone said game start');
