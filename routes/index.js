@@ -73,11 +73,21 @@ function score(req, res){
 
 function chat(req, res){
 	var unique = req.params.id;
-	Chat.find({ 'chatid' : unique}, function(err, messages) {
-		if (err)
-			res.send(err);
-		else {
-			res.send(messages);
-		}
-	});
+	if (unique == undefined){
+		Chat.find(function(err, messages) {
+			if (err)
+				res.send(err);
+			else {
+				res.send(messages);
+			}
+		});
+	}else{
+		Chat.find({ 'chatid' : unique}, function(err, messages) {
+			if (err)
+				res.send(err);
+			else {
+				res.send(messages);
+			}
+		});
+	}
 }
