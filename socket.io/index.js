@@ -223,19 +223,19 @@ var socketConnection = function socketConnection(socket){
 
 			if(youGuessedtimer == 3600.001 || opponentGuessedtimer == 3600.001){
 				if((yourWordDeployedtimer < opponentWordDeployedtimer) && (opponentGuessedtimer =! 3600.001)){
-					winner = data.you;
-					loser = data.opponent;
-				}else{
 					winner = data.opponent;
 					loser = data.you;
+				}else{
+					winner = data.you;
+					loser = data.opponent;
 				}
 			} else {
 				if(yourWordDeployedtimer < opponentWordDeployedtimer){
-					winner = data.you;
-					loser = data.opponent;
-				} else {
 					winner = data.opponent;
 					loser = data.you;
+				} else {
+					winner = data.you;
+					loser = data.opponent;
 				}
 			}
 
