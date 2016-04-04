@@ -56,17 +56,14 @@ function logOut(req, res){
 
 function score(req, res){
 	var username = req.params.username;
-	var result = Boolean(req.params.result);
+	var result = req.params.result;
 	Account.findOne({ 'username': username}, function(err, user) {
 	  if (err || !user)
 	  	return console.error(err);
 	  else {
-			console.log(result + ' ' + typeof(result))
-			if(Boolean(result)){
-				console.log('ey');
+			if(result == 'true'){
 				user.score_won++;
 			} else {
-				console.log('ram');
 				user.score_lost++;
 			}
 	  }
