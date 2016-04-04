@@ -40,6 +40,7 @@ mongoose.connect('mongodb://heroku_q46gwrlr:79v177tu5jbrdm9c0cep95lopc@ds019058.
 
 //routes
 app.get('/', routes.index);
+app.get('/chat', routes.chatAll);
 app.get('/chat/:id', routes.chat);
 app.get('/user/update/score/:username/:result', routes.score);
 app.post(config.routes.login, passport.authenticate('local'), routes.login);

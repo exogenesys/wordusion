@@ -7,6 +7,8 @@ module.exports.login = login;
 module.exports.logOut = logOut;
 module.exports.score = score;
 module.exports.chat = chat;
+module.exports.chatAll = chatAll;
+
 
 function index(req, res){
 	res.send({'user': req.user});
@@ -71,16 +73,19 @@ function score(req, res){
 	});
 };
 
+function chatAll(req, res){
+	Chat.find(function(err, messages) {
+		if (err)
+			res.send(err);
+		else {
+			res.send(messages);
+		}
+	});
+}
+
 function chat(req, res){
 	var unique = req.params.id;
 	if (unique == undefined){
-		Chat.find(function(err, messages) {
-			if (err)
-				res.send(err);
-			else {
-				res.send(messages);
-			}
-		});
 	}else{
 		Chat.find({ 'chatid' : unique}, function(err, messages) {
 			if (err)
