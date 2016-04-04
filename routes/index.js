@@ -61,7 +61,7 @@ function score(req, res){
 	  if (err || !user)
 	  	return console.error(err);
 	  else {
-			if(result){
+			if(Boolean(result)){
 				console.log(result);
 				user.score_won++;
 			} else {
