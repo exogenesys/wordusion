@@ -51,6 +51,5 @@ app.get('/error', function(req, res, next){
 	next(new Error('A contrived error'));
 });
 
-var server = app.listen(process.env.PORT)
-// var server = app.listen(2525);
+var server = app.listen(process.env.PORT);
 io.startIo(server);

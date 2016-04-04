@@ -66,6 +66,7 @@ function score(req, res){
 			else
 				user.score_lost++;
 	  	}
+			res.send(user);
 			user.save(function(err){
 				if(err)
 					console.log(err);
