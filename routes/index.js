@@ -62,10 +62,10 @@ function score(req, res){
 	  	return console.error(err);
 	  else {
 			if(Boolean(result)){
-				console.log(result);
+				console.log('ey');
 				user.score_won++;
 			} else {
-				console.log(result);
+				console.log('ram');
 				user.score_lost++;
 			}
 	  }
