@@ -105,7 +105,7 @@ var socketConnection = function socketConnection(socket){
 			unirest.get(url)
 			.header("Accept", "application/json")
 			.end(function (result) {
-				if(result.body[0].text == undefined){
+				if(result.body[0].text == undefined || result.body[0] == undefined || result.body == undefined){
 					var definition = "Something is really something";
 					var partOfSpeech = "Something is really something";
 				} else {
