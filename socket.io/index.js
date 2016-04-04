@@ -161,6 +161,10 @@ var socketConnection = function socketConnection(socket){
 
 		//Check this
 		if(n >= 0 && m == null){
+			users[data.opponent].emit('new message', {
+				'opponent' : data.you,
+				'message' : data.message
+			});
 			console.log('wordDeployed : ' + n);
 			users[data.you].emit('word deployed', {
 				'wordDeployed' : true,
