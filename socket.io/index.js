@@ -8,6 +8,8 @@ var	cookie = require('cookie'),
 	unirest = require('unirest');
 
 var Chat = require('../models/chat');
+var ChatId = require('../models/chatid');
+
 
 var numUsers = 0,
 users = {},
@@ -78,15 +80,9 @@ var socketConnection = function socketConnection(socket){
 // 			flag = false;
 // });
 
-
 	socket.on('game start', function (data) {
 		console.log('Someone said game start');
 		// These code snippets use an opensource library. http://unirest.io/nodejs
-		var type_n = ((Math.floor(Math.random() * 10))%2 + 1);
-		var type = "verbs";
-		if(type_n%2){
-			//type = "adjective";
-		}
 		var maxLength = 12;
 		var minLength = 4;
 		var api_key = "";
@@ -115,17 +111,22 @@ var socketConnection = function socketConnection(socket){
 					var definition = result.body[0].text;
 					var partOfSpeech = result.body[0].partOfSpeech;
 				}
-				users[data.opponent].emit('game start', {
-					'word' : word,
-					'definition' : definition,
-					'partofspeech': partOfSpeech,
-					'opponentUsername' : data.username
-				});
-				console.log({
-					'word' : word,
-					'definition' : definition,
-					'partofspeech': partOfSpeech,
-					'opponentUsername' : data.username
+				var chatid =  new ChatId();
+					chatid.save(function(err, datum){
+						users[data.opponent].emit('game start', {
+							'word' : word,
+							'definition' : definition,
+							'partofspeech': partOfSpeech,
+							'chatid': datum.id,
+							'opponentUsername' : data.username
+						});
+						console.log({
+							'word' : word,
+							'definition' : definition,
+							'partofspeech': partOfSpeech,
+							'chatid': datum.id,
+							'opponentUsername' : data.username
+						});
 				});
 			});
 		});
@@ -148,15 +149,16 @@ var socketConnection = function socketConnection(socket){
 		var chat =  new Chat();
 		chat.message = data.message;
 		chat.sender = data.username;
-		chat.id = data.you + data.opponent;
-		console.log(chat.id);
+		chat.chatid = data.you + data.opponent;
+		console.log(chat.chatid);
 		chat.save();
 
 		console.log(data);
 		var n = data.message.indexOf(data.word);
+		var m = data.message.match(/\*([^*]*)\*/);
 
 		//Check this
-		if (n == -1 && (m =! null)){
+		if (n == -1 && m =! null)){
 		} else {
 			console.log('wordDeployed : ' + n);
 			users[data.you].emit('word deployed', {
@@ -169,7 +171,6 @@ var socketConnection = function socketConnection(socket){
 			});
 		}
 
-		var m = data.message.match(/\*([^*]*)\*/);
 		if (m == null){
 			users[data.opponent].emit('new message', {
 				'opponent' : data.you,

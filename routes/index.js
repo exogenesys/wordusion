@@ -1,10 +1,12 @@
 var Account = require('../models/account');
+var Chat = require('../models/chat');
 
 module.exports.index = index;
 module.exports.register = register;
 module.exports.login = login;
 module.exports.logOut = logOut;
 module.exports.score = score;
+module.exports.chat = chat;
 
 function index(req, res){
 	res.send({'user': req.user});
@@ -68,3 +70,14 @@ function score(req, res){
 			});
 	});
 };
+
+function chat(req, res){
+	var unique = req.params.id;
+	Chat.find({ 'chatid' : unique}, function(err, messages) {
+		if (err)
+			res.send(err);
+		else {
+			res.send(messages);
+		}
+	});
+}
