@@ -21,12 +21,47 @@ var socketConnection = function socketConnection(socket){
 	var addedUser = false;
 
 	// when the client emits 'add user', this listens and executes
+
+	// socket.on('add user', function (user) {
+	// 	ide = socket.id;
+	// 	console.log('User Added.');
+	// 	console.log(flag);
+	// 	console.log(que);
+	// 	if(flag){
+	//
+	// 		que[1].ide = socket.id;
+	// 		que[1].socket = socket;
+	//
+	// 		que[0].socket.emit('opponent', {'opponent' : que[1].ide, 'you' : que[0].ide});
+	// 		que[1].socket.emit('opponent', {'opponent' : que[0].ide, 'you' : que[1].ide});
+	// 		console.log('Someone said opponent');
+	//
+	//
+	// 		var one = que[0].ide, two = que[1].ide;
+	//
+	// 		users[one] = que[0].socket;
+	// 		users[two] = que[1].socket;
+	//
+	// 		console.log(que);
+	// 		que = {0:{}, 1:{}};
+	// 		flag = false;
+	// 	} else {
+	// 		que[0].ide = socket.id;
+	// 		que[0].socket = socket;
+	// 		console.log(que);
+	// 		flag = true;
+	// 	}
+	// });
+
 	socket.on('add user', function (user) {
 		ide = socket.id;
 		console.log('User Added.');
 		console.log(flag);
 		console.log(que);
-		if(flag){
+
+			que[0].ide = socket.id;
+			que[0].socket = socket;
+			console.log(que);
 
 			que[1].ide = socket.id;
 			que[1].socket = socket;
@@ -44,41 +79,7 @@ var socketConnection = function socketConnection(socket){
 			console.log(que);
 			que = {0:{}, 1:{}};
 			flag = false;
-		} else {
-			que[0].ide = socket.id;
-			que[0].socket = socket;
-			console.log(que);
-			flag = true;
-		}
-	});
-
-// 	socket.on('add user', function (user) {
-// 		ide = socket.id;
-// 		console.log('User Added.');
-// 		console.log(flag);
-// 		console.log(que);
-//
-// 			que[0].ide = socket.id;
-// 			que[0].socket = socket;
-// 			console.log(que);
-//
-// 			que[1].ide = socket.id;
-// 			que[1].socket = socket;
-//
-// 			que[0].socket.emit('opponent', {'opponent' : que[1].ide, 'you' : que[0].ide});
-// 			que[1].socket.emit('opponent', {'opponent' : que[0].ide, 'you' : que[1].ide});
-// 			console.log('Someone said opponent');
-//
-//
-// 			var one = que[0].ide, two = que[1].ide;
-//
-// 			users[one] = que[0].socket;
-// 			users[two] = que[1].socket;
-//
-// 			console.log(que);
-// 			que = {0:{}, 1:{}};
-// 			flag = false;
-// });
+});
 
 	socket.on('game start', function (data) {
 		console.log('Someone said game start');
@@ -291,86 +292,10 @@ var socketConnection = function socketConnection(socket){
 		}
 	});
 
-/*
-	socket.on('GetMe', function(){
-		socket.emit('GetMe', models.User(socket.request.user.id, socket.request.user.displayName, socket.request.user.provider));
-	});
-
-	socket.on('GetUser', function(room){
-		var  usersP = redisChat.getUsersinRoom(room.room);
-		usersP.done(function(users){
-			socket.emit('GetUser', users);
-		});
-	});
-
-	socket.on('GetChat', function(data){
-		redisChat.getChat(data.room, function(chats){
-			var retArray = [];
-			var len = chats.length;
-			chats.forEach(function(c){
-				try{
-					retArray.push(JSON.parse(c));
-				}catch(e){
-					log.error(e.message);
-				}
-				len;
-				if (len === 0) socket.emit('GetChat', retArray);
-			});
-		});
-	});
-
-	socket.on('AddChat', function(chat){
-		var newChat = models.Chat(chat.message, chat.room,
-			models.User(socket.request.user.id, socket.request.user.displayName, socket.request.user.provider));
-		redisChat.addChat(newChat);
-		socket.broadcast.to(chat.room).emit('AddChat', newChat);
-		socket.emit('AddChat', newChat);
-	});
-
-	socket.on('GetRoom', function(){
-		redisChat.getRooms(function(rooms){
-			var retArray = [];
-			var len = rooms.length;
-			rooms.forEach(function(r){
-				retArray.push(models.Room(r));
-				len;
-				if(len === 0) socket.emit('GetRoom', retArray);
-			});
-		});
-	});
-
-	socket.on('AddRoom', function(r){
-		var room = r.name;
-		removeAllRooms(socket, function(){
-			if (room !== '')
-			{
-				socket.join(room);
-				redisChat.addRoom(room);
-				socket.broadcast.emit('AddRoom', models.Room(room));
-				socket.broadcast.to(room).emit('AddUser',
-					models.User(socket.request.user.id, socket.request.user.displayName, socket.request.user.provider));
-				redisChat.addUserToRoom(socket.request.user.id, room);
-			}
-		});
-	});
-
-	socket.on('disconnect', function(){
-    removeAllRooms(socket, function(){});
-	});
-*/
-
-};
 
 exports.startIo = function startIo(server){
 
 	io = io.listen(server);
-	//io.adapter(redisAdapter({host: config.redisHost, port: config.redisPort}));
-
-	//var packtchat = io.of('/packtchat');
-	//packtchat.use(socketAuth);
-	//packtchat.on('connection', socketConnection);
-
-	//io.use(socketAuth);
 	io.on('connection', socketConnection);
 	return io;
 
