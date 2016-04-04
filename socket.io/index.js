@@ -213,30 +213,47 @@ var socketConnection = function socketConnection(socket){
 			var opponentWordDeployedtimer = 3600 - (data.opponentWordDeployed / 1000);
 			var opponentGuessedtimer = 3600 - (data.opponentWordGuessed / 1000);
 
+
 			console.log('yourWordDeployedtimer : '  + yourWordDeployedtimer);
 			console.log('youGuessedtimer : '  + youGuessedtimer);
 			console.log('opponentWordDeployedtimer : '  + opponentWordDeployedtimer);
 			console.log('opponentGuessedtimer : '  + opponentGuessedtimer);
 
 			var winner = "", loser = "";
-			if(youGuessedtimer == 3600.001){
-				youGuessedtimer = opponentWordDeployedtimer;
-			}
-			if(opponentGuessedtimer == 3600.001){
-				opponentGuessedtimer = yourWordDeployedtimer;
-			}
 
-			if (((3600 - yourWordDeployedtimer) + (3600 - youGuessedtimer + opponentWordDeployedtimer)) > ((3600 - opponentWordDeployedtimer) + (3600 - opponentGuessedtimer + yourWordDeployedtimer))){
-				loser = data.opponent;
-				winner = data.you;
+			if(youGuessedtimer == 3600.001 || opponentGuessedtimer == 3600.001){
+				if(yourWordDeployedtimer < opponentWordDeployedtimer && opponentGuessedtimer =! 3600.001){
+					winner = data.you;
+					loser = data.opponent;
+				}else{
+					winner = data.opponent;
+					loser = data.you;
+				}
 			} else {
-				winner = data.opponent;
-				loser = data.you;
+				if(yourWordDeployedtimer < opponentWordDeployedtimer){
+					winner = data.you;
+					loser = data.opponent;
+				} else {
+					winner = data.opponent;
+					loser = data.you;
+				}
 			}
 
-			console.log('you : '+((3600 - yourWordDeployedtimer) + (opponentWordDeployedtimer - youGuessedtimer)));
-			console.log('opponent : '+((3600 - opponentWordDeployedtimer) + (yourWordDeployedtimer - opponentGuessedtimer)));
-
+			// if(youGuessedtimer == 3600.001){
+			// 	youGuessedtimer = opponentWordDeployedtimer;
+			// }
+			// if(opponentGuessedtimer == 3600.001){
+			// 	opponentGuessedtimer = yourWordDeployedtimer;
+			// }
+			//
+			// if (((3600 - yourWordDeployedtimer) + (3600 - youGuessedtimer + opponentWordDeployedtimer)) > ((3600 - opponentWordDeployedtimer) + (3600 - opponentGuessedtimer + yourWordDeployedtimer))){
+			// 	loser = data.opponent;
+			// 	winner = data.you;
+			// } else {
+			// 	winner = data.opponent;
+			// 	loser = data.you;
+			// }
+			//
 
 			users[winner].emit('result', {
 				'string' : 'You won!'
