@@ -292,6 +292,7 @@ var socketConnection = function socketConnection(socket){
 		}
 	});
 
+};
 
 exports.startIo = function startIo(server){
 
