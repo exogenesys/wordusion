@@ -159,8 +159,7 @@ var socketConnection = function socketConnection(socket){
 		var n = data.message.indexOf(data.word);
 
 		//Check this
-		if (n == -1 && (m =! null)){
-		} else {
+		if(n >= 0 && m == null){
 			console.log('wordDeployed : ' + n);
 			users[data.you].emit('word deployed', {
 				'wordDeployed' : true,
@@ -170,14 +169,12 @@ var socketConnection = function socketConnection(socket){
 				'wordDeployed' : true,
 				'who' : data.you,
 			});
-		}
-
-		if (m == null){
+		} else if(m == null){
 			users[data.opponent].emit('new message', {
 				'opponent' : data.you,
 				'message' : data.message
 			});
-		} else {
+		} else if(m != null){
 			if(data.opponentWord == m[1]){
 				users[data.you].emit('word guessed', {
 					'wordGuessed' : true,
