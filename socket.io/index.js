@@ -208,10 +208,10 @@ var socketConnection = function socketConnection(socket){
 		if(users[data.you] == undefined || users[data.opponent] == undefined){
 			console.log(data);
 		} else {
-			var yourWordDeployedtimer = 180 - (data.youWordDeployed / 1000);
-			var youGuessedtimer = 180 - (data.youWordGuessed / 1000);
-			var opponentWordDeployedtimer = 180 - (data.opponentWordDeployed / 1000);
-			var opponentGuessedtimer = 180 - (data.opponentWordGuessed / 1000);
+			var yourWordDeployedtimer = 3600 - (data.youWordDeployed / 1000);
+			var youGuessedtimer = 3600 - (data.youWordGuessed / 1000);
+			var opponentWordDeployedtimer = 3600 - (data.opponentWordDeployed / 1000);
+			var opponentGuessedtimer = 3600 - (data.opponentWordGuessed / 1000);
 
 			console.log('yourWordDeployedtimer : '  + yourWordDeployedtimer);
 			console.log('youGuessedtimer : '  + youGuessedtimer);
@@ -219,14 +219,14 @@ var socketConnection = function socketConnection(socket){
 			console.log('opponentGuessedtimer : '  + opponentGuessedtimer);
 
 			var winner = "", loser = "";
-			if(youGuessedtimer == 180.001){
+			if(youGuessedtimer == 3600.001){
 				youGuessedtimer = opponentWordDeployedtimer;
 			}
-			if(opponentGuessedtimer == 180.001){
+			if(opponentGuessedtimer == 3600.001){
 				opponentGuessedtimer = yourWordDeployedtimer;
 			}
 
-			if (((180 - yourWordDeployedtimer) + (180 - youGuessedtimer + opponentWordDeployedtimer)) > ((180 - opponentWordDeployedtimer) + (180 - opponentGuessedtimer + yourWordDeployedtimer))){
+			if (((3600 - yourWordDeployedtimer) + (3600 - youGuessedtimer + opponentWordDeployedtimer)) > ((3600 - opponentWordDeployedtimer) + (3600 - opponentGuessedtimer + yourWordDeployedtimer))){
 				loser = data.opponent;
 				winner = data.you;
 			} else {
@@ -234,15 +234,15 @@ var socketConnection = function socketConnection(socket){
 				loser = data.you;
 			}
 
-			console.log('you : '+((180 - yourWordDeployedtimer) + (opponentWordDeployedtimer - youGuessedtimer)));
-			console.log('opponent : '+((180 - opponentWordDeployedtimer) + (yourWordDeployedtimer - opponentGuessedtimer)));
+			console.log('you : '+((3600 - yourWordDeployedtimer) + (opponentWordDeployedtimer - youGuessedtimer)));
+			console.log('opponent : '+((3600 - opponentWordDeployedtimer) + (yourWordDeployedtimer - opponentGuessedtimer)));
 
 
 			users[winner].emit('result', {
 				'string' : 'You won!'
 			});
 			users[loser].emit('result', {
-				'string' : 'You lose!'
+				'string' : 'You lost!'
 			});
 
 			delete users[data.you];
