@@ -177,7 +177,7 @@ var socketConnection = function socketConnection(socket){
 				'message' : data.message
 			});
 		} else {
-			var w = m[1];
+			var w = String(m[1]);
 			if(data.opponentWord.toUpperCase() == w.toUpperCase()){
 				users[data.you].emit('word guessed', {
 					'wordGuessed' : true,
