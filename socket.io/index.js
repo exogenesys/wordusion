@@ -222,7 +222,7 @@ var socketConnection = function socketConnection(socket){
 			var winner = "", loser = "";
 
 			if(youGuessedtimer == 3600.001 || opponentGuessedtimer == 3600.001){
-				if(yourWordDeployedtimer < opponentWordDeployedtimer && opponentGuessedtimer =! 3600.001){
+				if((yourWordDeployedtimer < opponentWordDeployedtimer) && (opponentGuessedtimer =! 3600.001)){
 					winner = data.you;
 					loser = data.opponent;
 				}else{
