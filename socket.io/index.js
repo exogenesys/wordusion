@@ -156,7 +156,8 @@ var socketConnection = function socketConnection(socket){
 
 		console.log(data);
 		var m = data.message.match(/\*([^*]*)\*/);
-		var n = data.message.indexOf(data.word);
+		var message = data.message.toUpperCase();
+		var n = message.indexOf(data.word.toUpperCase());
 
 		//Check this
 		if(n >= 0 && m == null){
@@ -175,7 +176,7 @@ var socketConnection = function socketConnection(socket){
 				'message' : data.message
 			});
 		} else if(m != null){
-			if(data.opponentWord == m[1]){
+			if(data.opponentWord.toUpperCase() === m[1].toUpperCase()){
 				users[data.you].emit('word guessed', {
 					'wordGuessed' : true,
 					'who' : data.you
