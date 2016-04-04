@@ -56,7 +56,7 @@ function logOut(req, res){
 
 function score(req, res){
 	var username = req.params.username;
-	var result = req.params.result;
+	var result = Boolean(req.params.result);
 	Account.findOne({ 'username': username}, function(err, user) {
 	  if (err || !user)
 	  	return console.error(err);
