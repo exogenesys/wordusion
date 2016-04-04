@@ -58,19 +58,20 @@ function score(req, res){
 	var username = req.params.username;
 	var result = req.params.result;
 	Account.findOne({ 'username': username}, function(err, user) {
-	  if (err && !user)
+	  if (err || !user)
 	  	return console.error(err);
 	  else {
-			if(result)
+			if(result){
 				user.score_won++;
-			else
+			} else {
 				user.score_lost++;
-	  	}
-			res.send(user);
-			user.save(function(err){
-				if(err)
-					console.log(err);
-			});
+			}
+	  }
+		res.send(user);
+		user.save(function(err){
+			if(err)
+				console.log(err);
+		});
 	});
 };
 
