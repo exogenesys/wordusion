@@ -226,7 +226,7 @@ var socketConnection = function socketConnection(socket){
 			var winner = "", loser = "";
 
 			if(youGuessedtimer == 3600.001 || opponentGuessedtimer == 3600.001){
-				if((yourWordDeployedtimer < opponentWordDeployedtimer) && (opponentGuessedtimer =! 3600.001)){
+				if((yourWordDeployedtimer < opponentWordDeployedtimer) && (opponentGuessedtimer != 3600.001)){
 					winner = data.opponent;
 					loser = data.you;
 				}else{
@@ -235,29 +235,13 @@ var socketConnection = function socketConnection(socket){
 				}
 			} else {
 				if(yourWordDeployedtimer < opponentWordDeployedtimer){
-					winner = data.opponent;
-					loser = data.you;
-				} else {
 					winner = data.you;
 					loser = data.opponent;
+				} else {
+					winner = data.opponent;
+					loser = data.you;
 				}
 			}
-
-			// if(youGuessedtimer == 3600.001){
-			// 	youGuessedtimer = opponentWordDeployedtimer;
-			// }
-			// if(opponentGuessedtimer == 3600.001){
-			// 	opponentGuessedtimer = yourWordDeployedtimer;
-			// }
-			//
-			// if (((3600 - yourWordDeployedtimer) + (3600 - youGuessedtimer + opponentWordDeployedtimer)) > ((3600 - opponentWordDeployedtimer) + (3600 - opponentGuessedtimer + yourWordDeployedtimer))){
-			// 	loser = data.opponent;
-			// 	winner = data.you;
-			// } else {
-			// 	winner = data.opponent;
-			// 	loser = data.you;
-			// }
-			//
 
 			users[winner].emit('result', {
 				'string' : 'You won!'
