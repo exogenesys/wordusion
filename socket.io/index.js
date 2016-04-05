@@ -235,11 +235,11 @@ var socketConnection = function socketConnection(socket){
 				}
 			} else {
 				if(yourWordDeployedtimer < opponentWordDeployedtimer){
-					winner = data.you;
-					loser = data.opponent;
-				} else {
 					winner = data.opponent;
 					loser = data.you;
+				} else {
+					winner = data.you;
+					loser = data.opponent;
 				}
 			}
 
