@@ -180,26 +180,30 @@ var socketConnection = function socketConnection(socket){
 				'message' : data.message
 			});
 		} else if(m != null){
-			if(data.opponentWord.toUpperCase() === m[1].toUpperCase()){
-				users[data.you].emit('word guessed', {
-					'wordGuessed' : true,
-					'who' : data.you
-				});
-				users[data.opponent].emit('word guessed', {
-					'wordGuessed' : true,
-					'who' : data.you
-				});
+			if(data.guessFlag){
+				if(data.opponentWord.toUpperCase() === m[1].toUpperCase()){
+					users[data.you].emit('word guessed', {
+						'wordGuessed' : true,
+						'who' : data.you
+					});
+					users[data.opponent].emit('word guessed', {
+						'wordGuessed' : true,
+						'who' : data.you
+					});
+				} else {
+					users[data.you].emit('word guessed', {
+						'wordGuessed' : false,
+						'who' : data.you,
+						'word' : m[1]
+					});
+					users[data.opponent].emit('word guessed', {
+						'wordGuessed' : false,
+						'who' : data.you,
+						'word' : m[1]
+					});
+				}
 			} else {
-				users[data.you].emit('word guessed', {
-					'wordGuessed' : false,
-					'who' : data.you,
-					'word' : m[1]
-				});
-				users[data.opponent].emit('word guessed', {
-					'wordGuessed' : false,
-					'who' : data.you,
-					'word' : m[1]
-				});
+				users[data.you].emit('deploy word first', {});
 			}
 		}
 	});
