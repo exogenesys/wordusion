@@ -53,7 +53,7 @@ app.post(config.routes.login, passport.authenticate('local', function(err, user)
 			console.log('2');
 	    // return res.redirect('/users/' + user.username);
 	  });
-	})(req, res, next), routes.login);
+	}), routes.login);
 
 app.get(config.routes.logout, routes.logOut);
 app.post(config.routes.register, routes.register);
