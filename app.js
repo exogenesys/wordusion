@@ -43,7 +43,18 @@ app.get('/', routes.index);
 app.get('/chat', routes.chatAll);
 app.get('/chat/:id', routes.chat);
 app.get('/user/update/score/:username/:result', routes.score);
-app.post(config.routes.login, passport.authenticate('local'), routes.login);
+app.post(config.routes.login, passport.authenticate('local', function(err, user){
+	if (err) { return next(err); }
+	  if (!user) {
+			console.log('2');
+			res.send({'auth':false}); }
+	  req.logIn(user, function(err) {
+	    if (err) { return next(err); }
+			console.log('2');
+	    // return res.redirect('/users/' + user.username);
+	  });
+	})(req, res, next), routes.login);
+
 app.get(config.routes.logout, routes.logOut);
 app.post(config.routes.register, routes.register);
 

@@ -21,12 +21,9 @@ function login(req, res){
 	  if (err){
 			item.auth = false;
 			res.send(item);
-			console.log('login failed');
-			console.log(data);
 			// return console.error(err);
 		}
 	  else {
-			console.log(data);
 	  	item.username = data.username;
 			item.score_won = data.score_won;
 			item.score_lost = data.score_lost;
