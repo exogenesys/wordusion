@@ -21,6 +21,8 @@ function login(req, res){
 	  if (err){
 			item.auth = false;
 			res.send(item);
+			console.log('login failed');
+			console.log(item);
 			// return console.error(err);
 		}
 	  else {
