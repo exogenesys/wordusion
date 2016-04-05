@@ -19,9 +19,9 @@ function login(req, res){
 	var item = {};
 	Account.findOne({ 'username': req.body.username}, function(err, data) {
 	  if (err){
-	  	return console.error(err);
 			item.auth = false;
 			res.send(item);
+			// return console.error(err);
 		}
 	  else {
 	  	item.username = data.username;
