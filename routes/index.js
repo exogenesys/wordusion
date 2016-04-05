@@ -22,10 +22,11 @@ function login(req, res){
 			item.auth = false;
 			res.send(item);
 			console.log('login failed');
-			console.log(item);
+			console.log(data);
 			// return console.error(err);
 		}
 	  else {
+			consoke,log(data);
 	  	item.username = data.username;
 			item.score_won = data.score_won;
 			item.score_lost = data.score_lost;
