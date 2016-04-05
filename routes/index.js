@@ -26,7 +26,7 @@ function login(req, res){
 			// return console.error(err);
 		}
 	  else {
-			consoke,log(data);
+			console.log(data);
 	  	item.username = data.username;
 			item.score_won = data.score_won;
 			item.score_lost = data.score_lost;
