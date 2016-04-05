@@ -54,7 +54,8 @@ app.post(config.routes.login, function(req, res, next){
 			console.log('2');
 	    // return res.redirect('/users/' + user.username);
 	  });
-	})(req, res, next)}), routes.login);
+	})(req, res, next)
+}), routes.login);
 
 app.get(config.routes.logout, routes.logOut);
 app.post(config.routes.register, routes.register);
